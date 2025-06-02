@@ -5,15 +5,8 @@ import (
 )
 
 func main() {
-	//gin.SetMode(gin.ReleaseMode) // Optional: set release mode
 
 	r := gin.Default()
-
-	// ✅ Allow all IPs by setting to nil (and suppress warning safely)
-	// err := r.SetTrustedProxies(nil)
-	// if err != nil {
-	// 	panic(err)
-	// }
 
 	chatRoom := NewChatRoom()
 
