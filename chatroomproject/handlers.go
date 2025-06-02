@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+//handler function to join
 func JoinHandler(cr *ChatRoom) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		id := c.Query("id")
@@ -20,6 +21,7 @@ func JoinHandler(cr *ChatRoom) gin.HandlerFunc {
 	}
 }
 
+//handler function to leave
 func LeaveHandler(cr *ChatRoom) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		id := c.Query("id")
@@ -32,6 +34,7 @@ func LeaveHandler(cr *ChatRoom) gin.HandlerFunc {
 	}
 }
 
+//handler function to send message
 func SendHandler(cr *ChatRoom) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		id := c.Query("id")
@@ -49,6 +52,7 @@ func SendHandler(cr *ChatRoom) gin.HandlerFunc {
 	}
 }
 
+//This one for handling the client if not available or missing
 func MessagesHandler(cr *ChatRoom) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		id := c.Query("id")

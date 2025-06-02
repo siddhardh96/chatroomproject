@@ -9,6 +9,7 @@ type Client struct {
 	MsgChan chan string
 }
 
+//chatroom struct
 type ChatRoom struct {
 	clients    map[string]*Client
 	register   chan *Client
@@ -17,6 +18,7 @@ type ChatRoom struct {
 	mu         sync.RWMutex
 }
 
+//everytime new chatroom will be created when ever a new client register
 func NewChatRoom() *ChatRoom {
 	room := &ChatRoom{
 		clients:    make(map[string]*Client),
@@ -29,6 +31,7 @@ func NewChatRoom() *ChatRoom {
 	return room
 }
 
+//this will run to send and recieve messages
 func (cr *ChatRoom) run() {
 	for {
 		select {
@@ -58,6 +61,7 @@ func (cr *ChatRoom) run() {
 	}
 }
 
+//a new client join the meet
 func (cr *ChatRoom) Join(id string) *Client {
 	client := &Client{
 		ID:      id,
@@ -67,6 +71,7 @@ func (cr *ChatRoom) Join(id string) *Client {
 	return client
 }
 
+//this is to leave the room
 func (cr *ChatRoom) Leave(id string) {
 	cr.mu.RLock()
 	client, ok := cr.clients[id]
@@ -76,11 +81,13 @@ func (cr *ChatRoom) Leave(id string) {
 	}
 }
 
+//This one for send message to client
 func (cr *ChatRoom) SendMessage(senderID, message string) {
 	formatted := "[" + senderID + "]: " + message
 	cr.broadcast <- formatted
 }
 
+//this one to get a client
 func (cr *ChatRoom) GetClient(id string) (*Client, bool) {
 	cr.mu.RLock()
 	defer cr.mu.RUnlock()
